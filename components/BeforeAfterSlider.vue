@@ -1,25 +1,34 @@
 <template>
   <div
-    class="relative w-full mx-auto overflow-hidden"
+    class="relative w-full mx-auto overflow-hidden h-screen max-h-screen"
     @mousedown="startDragging"
     @touchstart="startDragging"
   >
-    <div class="relative w-full">
-      <img :src="afterSrc" class="w-full absolute top-0 left-0" :style="{ clipPath: clipPathValue }" draggable="false" />
-      <img :src="beforeSrc" class="w-full" draggable="false" />
+    <div class="relative w-full h-full">
+      <img :src="afterSrc" class="absolute top-0 left-0 w-full h-full object-cover" :style="{ clipPath: clipPathValue }" draggable="false" />
+      <img :src="beforeSrc" class="w-full h-full object-cover" draggable="false" />
     </div>
-    <div class="absolute bottom-4 left-0 w-full flex items-center justify-between px-4">
-      <!-- <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">Before</span> -->
+    <div v-if="showLabels" class="absolute bottom-4 left-0 w-full flex items-center justify-between px-4">
+      <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">Before</span>
       <input
         type="range"
         min="0"
         max="100"
         v-model="sliderValue"
-        class="w-full mx-4 appearance-none bg-transparent slider"
+        class="w-3/4 mx-4 appearance-none bg-transparent slider"
         @mousedown.stop
       />
-      <!-- <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">After</span> -->
+      <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">After</span>
     </div>
+    <input
+      v-else
+      type="range"
+      min="0"
+      max="100"
+      v-model="sliderValue"
+      class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-3/4 appearance-none bg-transparent slider"
+      @mousedown.stop
+    />
   </div>
 </template>
 
@@ -35,6 +44,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  showLabels: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const sliderValue = ref(50);
