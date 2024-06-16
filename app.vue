@@ -27,7 +27,3 @@
     </footer>
   </div>
 </template>
-
-<script setup>
-import BeforeAfterSlider from '~/components/BeforeAfterSlider.vue';
-</script>

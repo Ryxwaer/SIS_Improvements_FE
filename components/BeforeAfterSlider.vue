@@ -9,7 +9,7 @@
       <img :src="beforeSrc" class="w-full" draggable="false" />
     </div>
     <div class="absolute bottom-4 left-0 w-full flex items-center justify-between px-4">
-      <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">Before</span>
+      <!-- <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">Before</span> -->
       <input
         type="range"
         min="0"
@@ -18,7 +18,7 @@
         class="w-3/4 mx-4 appearance-none bg-transparent slider"
         @mousedown.stop
       />
-      <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">After</span>
+      <!-- <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">After</span> -->
     </div>
   </div>
 </template>

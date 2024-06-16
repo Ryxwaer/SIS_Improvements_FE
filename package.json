@@ -16,7 +16,7 @@
     "vue-twentytwenty": "^1.0.0-1"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "latest",
-    "@nuxt/image": "latest"
+    "@nuxt/image": "latest",
+    "@nuxtjs/tailwindcss": "latest"
   }
 }
