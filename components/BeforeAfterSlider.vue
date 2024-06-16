@@ -1,13 +1,8 @@
 <template>
   <div
-    class="relative w-full max-w-4xl mx-auto overflow-hidden"
+    class="relative w-full mx-auto overflow-hidden"
     @mousedown="startDragging"
     @touchstart="startDragging"
-    @mouseup="stopDragging"
-    @touchend="stopDragging"
-    @mouseleave="stopDragging"
-    @mousemove="drag"
-    @touchmove="drag"
   >
     <div class="relative w-full">
       <img :src="afterSrc" class="w-full absolute top-0 left-0" :style="{ clipPath: clipPathValue }" draggable="false" />
@@ -29,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
   beforeSrc: {
@@ -65,22 +60,41 @@ const drag = (event) => {
 };
 
 const updateSliderValue = (event) => {
-  const rect = event.currentTarget.getBoundingClientRect();
+  const sliderElement = document.querySelector('.slider');
+  const rect = sliderElement.parentElement.getBoundingClientRect();
   const clientX = event.touches ? event.touches[0].clientX : event.clientX;
   const newValue = ((clientX - rect.left) / rect.width) * 100;
   sliderValue.value = Math.min(100, Math.max(0, newValue));
 };
+
+const updateSliderValueGlobal = (event) => {
+  if (isDragging.value) {
+    const sliderElement = document.querySelector('.slider');
+    const rect = sliderElement.parentElement.getBoundingClientRect();
+    const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+    const newValue = ((clientX - rect.left) / rect.width) * 100;
+    sliderValue.value = Math.min(100, Math.max(0, newValue));
+    event.preventDefault();
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('mousemove', updateSliderValueGlobal);
+  window.addEventListener('touchmove', updateSliderValueGlobal);
+  window.addEventListener('mouseup', stopDragging);
+  window.addEventListener('touchend', stopDragging);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('mousemove', updateSliderValueGlobal);
+  window.removeEventListener('touchmove', updateSliderValueGlobal);
+  window.removeEventListener('mouseup', stopDragging);
+  window.removeEventListener('touchend', stopDragging);
+});
 </script>
 
 <style scoped>
 .slider {
-  @apply
-  [&::-webkit-slider-runnable-track]:rounded-full
-  [&::-webkit-slider-runnable-track]:bg-black/50
-  [&::-webkit-slider-thumb]:appearance-none
-  [&::-webkit-slider-thumb]:h-5
-  [&::-webkit-slider-thumb]:w-5
-  [&::-webkit-slider-thumb]:rounded-full
-  [&::-webkit-slider-thumb]:bg-slate-50;
+  @apply [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-black/50 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-slate-50;
 }
 </style>

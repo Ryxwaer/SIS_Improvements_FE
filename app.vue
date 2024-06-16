@@ -7,7 +7,7 @@
     </header>
 
     <!-- Before/After Component Section -->
-    <main class="flex-grow w-full max-w-4xl my-12 px-6">
+    <main class="flex-grow w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl my-12 px-6">
       <BeforeAfterSlider
         beforeSrc="/images/before.png"
         afterSrc="/images/after.png"
