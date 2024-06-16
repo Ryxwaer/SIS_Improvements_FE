@@ -21,8 +21,9 @@ WORKDIR /app
 # Copy built files from the previous stage
 COPY --from=builder /app/.output ./
 
-# Install production dependencies
-RUN npm install --production
+# Copy package.json and node_modules from the builder stage
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
 
 # Expose the port the app runs on
 EXPOSE 3000
