@@ -15,7 +15,7 @@
         min="0"
         max="100"
         v-model="sliderValue"
-        class="w-3/4 mx-4 appearance-none bg-transparent slider"
+        class="w-full mx-4 appearance-none bg-transparent slider"
         @mousedown.stop
       />
       <!-- <span class="text-white font-bold text-lg bg-black bg-opacity-50 p-2 rounded">After</span> -->
